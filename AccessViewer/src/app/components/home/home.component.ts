@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { CommunicationService } from '../../services/communication.service';
 
 @Component({
   selector: 'app-home',
@@ -11,12 +12,18 @@ export class HomeComponent implements OnInit {
   uploadForm: FormGroup;
   picLoaded = false;
   filePicName = 'Elige archivo';
+  accessAllowed = false;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              private comm: CommunicationService) { }
 
   ngOnInit() {
     this.uploadForm = this.formBuilder.group({
       pictureFile: undefined
+    });
+
+    this.comm.getAccessAllowed().subscribe((value) => {
+      this.accessAllowed = value;
     });
   }
 
@@ -27,6 +34,8 @@ export class HomeComponent implements OnInit {
     //   (err) => console.log(err)
     // );
     console.log(this.uploadForm.get('pictureFile').value);
+    this.comm.checkAccessAllowed();
+
 
   }
 

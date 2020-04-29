@@ -1,33 +1,42 @@
 <div class="container animated fadeIn slower">
     <div class="row">
         <div class="col-12 mt-5">
-            <div class="col-12 h2 text-center mt-3">Sistema de acceso</div>
+            <div class="col-12 h2 text-center my-5">Sistema de acceso</div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="row">
+                <div class="col-12 my-2">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div *ngIf="!picLoaded" class="picplace flex-column text-center">
+                            <div class="content"></div>
+                        </div>
+                        <div *ngIf="picLoaded" class="flex-column">
+                            <img [src]="uploadForm.get('pictureFile').value">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 my-2">
+                    <form [formGroup]="uploadForm" (ngSubmit)="onSubmitPicture()">
+                        <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="pictureFile" name="pictureFile" (change)="onPictureSelect($event)">
+                                <label class="custom-file-label" for="pictureFile">{{filePicName}}</label>
+                            </div>
+                            <div class="input-group-append">
+                                <button *ngIf="uploadForm.get('pictureFile').value" type="submit" class="input-group-text">Subir</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-12">
+                <h5 *ngIf="!accessAllowed" class="alert alert-danger">Acceso denegado</h5>
+                <h5 *ngIf="accessAllowed" class="alert alert-success">Acceso concedido</h5>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <app-mapviewer></app-mapviewer>
         </div>
     </div>
-    <div class="col-12 my-2">
-        <div class="d-flex justify-content-center align-items-center">
-            <div *ngIf="!picLoaded" class="picplace flex-column text-center">
-                <div class="content"></div>
-            </div>
-            <div *ngIf="picLoaded" class="flex-column">
-                <img [src]="uploadForm.get('pictureFile').value">
-            </div>
-        </div>
-    </div>
-    <div class="col-12 my-2">
-        <form [formGroup]="uploadForm" (ngSubmit)="onSubmitPicture()">
-            <div class="input-group mb-3">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="pictureFile" name="pictureFile" (change)="onPictureSelect($event)">
-                    <label class="custom-file-label" for="pictureFile">{{filePicName}}</label>
-                </div>
-                <div class="input-group-append">
-                    <button *ngIf="uploadForm.get('pictureFile').value" type="submit" class="input-group-text">Subir</button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div *ngIf="picLoaded" class="col-12">
-        <h3>Acceso concedido</h3>
-    </div>
+
 </div>
