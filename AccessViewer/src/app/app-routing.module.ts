@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
+import { ControlComponent } from './components/control/control.component';
 import { AboutComponent } from './components/about/about.component';
+import { UploadUserImageComponent } from './components/control/upload-user-image/upload-user-image.component';
 
 const routes: Routes = [
-  { path: 'control', component: HomeComponent },
+  { path: 'control', component: ControlComponent },
+  { path: 'control/newImage', component: UploadUserImageComponent },
   { path: 'about', component: AboutComponent },
   { path: '**', redirectTo: '/control' }
 ];

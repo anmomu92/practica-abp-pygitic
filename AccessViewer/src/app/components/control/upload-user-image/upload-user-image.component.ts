@@ -1,18 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
-import { CommunicationService } from '../../services/communication.service';
+import { CommunicationService } from '../../../services/communication.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-upload-user-image',
+  templateUrl: './upload-user-image.component.html',
+  styleUrls: ['./upload-user-image.component.css']
 })
-export class HomeComponent implements OnInit {
+export class UploadUserImageComponent implements OnInit {
 
   uploadForm: FormGroup;
   picLoaded = false;
   filePicName = 'Elige archivo';
   accessAllowed = false;
+
+  newImageBody = {
+    image: '',
+    userId: ''
+  };
 
   constructor(private formBuilder: FormBuilder,
               private comm: CommunicationService) { }
@@ -28,15 +33,9 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmitPicture() {
-
-    // this.comm.cloudFunctions('pushPolygon', JSON.parse(this.uploadForm.get('polygonsFile').value)).subscribe(
-    //   (res) => {},
-    //   (err) => console.log(err)
-    // );
-    console.log(this.uploadForm.get('pictureFile').value);
-    this.comm.checkAccessAllowed();
-
-
+    this.comm.post('https://teunxo68u8.execute-api.us-east-1.amazonaws.com/dev', this.newImageBody).subscribe((res) => {
+      console.log(res);
+    });
   }
 
   onPictureSelect(event) {
@@ -46,6 +45,7 @@ export class HomeComponent implements OnInit {
         fileReader.readAsDataURL(event.target.files[0]);
         fileReader.onload = () => {
             this.uploadForm.get('pictureFile').setValue(fileReader.result);
+            this.newImageBody['image'] = this.uploadForm.get('pictureFile').value;
             this.picLoaded = true;
         };
         fileReader.onerror = (error) => {
@@ -54,5 +54,8 @@ export class HomeComponent implements OnInit {
         };
     }
   }
-  
+
+  onNameChange(event) {
+    this.newImageBody.userId = event.target.value;
+  }
 }

@@ -6,17 +6,19 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
-import { HomeComponent } from './components/home/home.component';
+import { ControlComponent } from './components/control/control.component';
 import { AboutComponent } from './components/about/about.component';
 import { MapviewerComponent } from './components/mapviewer/mapviewer.component';
+import { UploadUserImageComponent } from './components/control/upload-user-image/upload-user-image.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    HomeComponent,
+    ControlComponent,
     AboutComponent,
-    MapviewerComponent
+    MapviewerComponent,
+    UploadUserImageComponent
   ],
   imports: [
     BrowserModule,

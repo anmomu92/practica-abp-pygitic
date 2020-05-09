@@ -1,9 +1,9 @@
 <div class="container animated fadeIn slower">
     <div class="row">
         <div class="col-12 mt-5">
-            <div class="col-12 h2 text-center my-5">Sistema de acceso</div>
+            <div class="col-12 h2 text-center my-5">Subir imagen</div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12">
             <div class="row">
                 <div class="col-12 my-2">
                     <div class="d-flex justify-content-center align-items-center">
@@ -26,16 +26,15 @@
                                 <button *ngIf="uploadForm.get('pictureFile').value" type="submit" class="input-group-text">Subir</button>
                             </div>
                         </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Username" aria-label="Username" (change)="onNameChange($event)" aria-describedby="basic-addon1">
+                        </div>
                     </form>
                 </div>
             </div>
-            <div class="col-12">
-                <h5 *ngIf="!accessAllowed" class="alert alert-danger">Acceso denegado</h5>
-                <h5 *ngIf="accessAllowed" class="alert alert-success">Acceso concedido</h5>
-            </div>
-        </div>
-        <div class="col-12 col-md-6">
-            <app-mapviewer></app-mapviewer>
         </div>
     </div>
 
