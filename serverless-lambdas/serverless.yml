@@ -1,0 +1,39 @@
+service: prueba-abp2
+
+package:
+  exclude:
+    - ./**
+  include:
+    - handlers/**
+
+custom:
+  stage: ${opt:stage, "dev"}
+  region: ${opt:region, "us-east-1"}
+
+
+provider:
+  name: aws
+  runtime: python3.8
+  memorySize: 128
+  timeout: 30
+  stage: ${self:custom.stage}
+  region: ${self:custom.region}
+  role: arn:aws:iam::945154355127:role/lambda-admin
+
+
+functions:
+  rekognition-ABP:
+    handler: handlers/rekognition-ABP.handle
+    events:
+      - http:
+            path: /rekog
+            method: post
+            cors: true
+ 
+  upload_new_user-ABP:
+    handler: handlers/new_user.handle
+    events:
+      - http:
+            path: /picture
+            method: post
+            cors: true
