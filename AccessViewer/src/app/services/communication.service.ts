@@ -7,14 +7,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class CommunicationService {
 
-  public accessAllowed: Subject<boolean>;
+  public accessAllowed: Subject<number>;
 
   constructor( private http: HttpClient ) {
     this.accessAllowed = new Subject();
    }
 
-  checkAccessAllowed() {
-    this.accessAllowed.next(true);
+  checkAccessAllowed( value ) {
+    this.accessAllowed.next(value > 70 ? 1 : 0);
   }
 
   getAccessAllowed() {

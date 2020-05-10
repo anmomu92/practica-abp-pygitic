@@ -12,7 +12,6 @@ export class UploadUserImageComponent implements OnInit {
   uploadForm: FormGroup;
   picLoaded = false;
   filePicName = 'Elige archivo';
-  accessAllowed = false;
 
   newImageBody = {
     image: '',
@@ -25,10 +24,6 @@ export class UploadUserImageComponent implements OnInit {
   ngOnInit() {
     this.uploadForm = this.formBuilder.group({
       pictureFile: undefined
-    });
-
-    this.comm.getAccessAllowed().subscribe((value) => {
-      this.accessAllowed = value;
     });
   }
 

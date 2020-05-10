@@ -9,6 +9,13 @@
                 </ol>
             </nav>
         </div>
+        <div class="col-12 mb-5">
+            <div class="d-flex justify-content-end align-items-center">
+                <div class="flex-column">
+                    <button class="btn btn-outline-dark" [routerLink]="['newImage']"><i class="fa fa-plus"></i> Nuevo usuario</button>
+                </div>
+            </div>
+        </div>
         <div class="col-12 col-md-6">
             <div class="row">
                 <div class="col-12 my-2">
@@ -36,13 +43,32 @@
                 </div>
             </div>
             <div class="col-12 mb-2">
-                <h5 *ngIf="!accessAllowed" class="alert alert-danger">Acceso denegado</h5>
-                <h5 *ngIf="accessAllowed" class="alert alert-success">Acceso concedido</h5>
-                <button class="btn btn-outline-dark" [routerLink]="['newImage']"><i class="fa fa-plus"></i> Nuevo usuario</button>
+                <h5 *ngIf="accessAllowed === 0" class="alert alert-danger">Acceso denegado</h5>
+                <h5 *ngIf="accessAllowed === 1" class="alert alert-success">Acceso concedido</h5>
             </div>
         </div>
         <div class="col-12 col-md-6">
             <app-mapviewer></app-mapviewer>
+        </div>
+        <div *ngIf="accessAllowed === 1" class="col-12 my-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Campo</th>
+                        <th>Dato</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row">ID</td>
+                        <td>{{this.currentAccess.usuario}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row">% reconocimiento</td>
+                        <td>{{this.currentAccess.confidence}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 

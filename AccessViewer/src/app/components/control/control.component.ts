@@ -12,7 +12,11 @@ export class ControlComponent implements OnInit {
   uploadForm: FormGroup;
   picLoaded = false;
   filePicName = 'Elige archivo';
-  accessAllowed = false;
+  accessAllowed = -1;
+  currentAccess = {
+    usuario: '',
+    confidence: 0
+  };
 
   constructor(private formBuilder: FormBuilder,
               private comm: CommunicationService) { }
@@ -29,11 +33,10 @@ export class ControlComponent implements OnInit {
 
   onSubmitPicture() {
     const data = {image: this.uploadForm.get('pictureFile').value}
-    this.comm.postAWS('rekog', data).subscribe((res) => {
-      console.log(res);
+    this.comm.postAWS('rekog', data).subscribe((res: any) => {
+      this.currentAccess = res;
+      this.comm.checkAccessAllowed(res.confidence);
     });
-
-    this.comm.checkAccessAllowed();
   }
 
   onPictureSelect(event) {

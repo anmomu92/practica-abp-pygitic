@@ -10,7 +10,7 @@ export class MapviewerComponent implements OnInit {
 
   map: any;
   L: any;
-  accessAllowed = false;
+  accessAllowed = -1;
 
   placesNodesGeoJSON = {};
   constructor( private comm: CommunicationService ) {
@@ -58,7 +58,8 @@ export class MapviewerComponent implements OnInit {
     L.geoJSON(this.placesNodesGeoJSON, {
       style: (feature) => {
           switch (feature.properties.pathway) {
-              case 'entrada': return {fillColor: this.accessAllowed ? '#00ff00' : '#ff0000'};
+              case 'entrada': return {fillColor: this.accessAllowed === 1 ? '#00ff00' :
+                                                (this.accessAllowed === 0 ? '#ff0000' : '#ffff00') };
               case 'pasillo': return {fillColor: '#ffff00'};
           }
       },
