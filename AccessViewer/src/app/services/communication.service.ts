@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +21,13 @@ export class CommunicationService {
     return this.accessAllowed.asObservable();
   }
 
-  post(url, data) {
-    return this.http.post(url, data);
+  postAWS(endpoint, data) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=utf-8'
+      })
+    };
+    return this.http.post(`https://b6g1auili2.execute-api.us-east-1.amazonaws.com/dev/${endpoint}`, data, httpOptions);
   }
 
 }

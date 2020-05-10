@@ -33,7 +33,7 @@ export class UploadUserImageComponent implements OnInit {
   }
 
   onSubmitPicture() {
-    this.comm.post('https://teunxo68u8.execute-api.us-east-1.amazonaws.com/dev', this.newImageBody).subscribe((res) => {
+    this.comm.postAWS('picture', this.newImageBody).subscribe((res) => {
       console.log(res);
     });
   }

@@ -28,15 +28,12 @@ export class ControlComponent implements OnInit {
   }
 
   onSubmitPicture() {
+    const data = {image: this.uploadForm.get('pictureFile').value}
+    this.comm.postAWS('rekog', data).subscribe((res) => {
+      console.log(res);
+    });
 
-    // this.comm.cloudFunctions('pushPolygon', JSON.parse(this.uploadForm.get('polygonsFile').value)).subscribe(
-    //   (res) => {},
-    //   (err) => console.log(err)
-    // );
-    console.log(this.uploadForm.get('pictureFile').value);
     this.comm.checkAccessAllowed();
-
-
   }
 
   onPictureSelect(event) {
@@ -54,5 +51,4 @@ export class ControlComponent implements OnInit {
         };
     }
   }
-  
 }
