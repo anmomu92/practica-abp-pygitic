@@ -25,8 +25,10 @@ export class MapviewerComponent implements OnInit {
     }
 
     this.comm.getAccessAllowed().subscribe((value) => {
-      this.accessAllowed = value;
-      this.reinitializeMap();
+      if (value !== this.accessAllowed) {
+        this.accessAllowed = value;
+        this.reinitializeMap();
+      }
     });
 
   }
