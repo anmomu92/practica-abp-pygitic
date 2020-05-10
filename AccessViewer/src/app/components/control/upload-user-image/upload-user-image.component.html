@@ -1,0 +1,47 @@
+<div class="container animated fadeIn slower">
+    <div class="row">
+        <div class="col-12 mt-5">
+            <!-- <div class="col-12 h2 text-center my-5">Subir imagen</div> -->
+            <nav aria-label="breadcrumb" class="my-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item btn-link" [routerLink]="['/control']">Control</li>
+                    <li class="breadcrumb-item active" aria-current="page">Subir imagen</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 my-2">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div *ngIf="!picLoaded" class="picplace flex-column text-center">
+                            <div class="content"></div>
+                        </div>
+                        <div *ngIf="picLoaded" class="flex-column">
+                            <img [src]="uploadForm.get('pictureFile').value">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 my-2">
+                    <form [formGroup]="uploadForm" (ngSubmit)="onSubmitPicture()">
+                        <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="pictureFile" name="pictureFile" (change)="onPictureSelect($event)">
+                                <label class="custom-file-label" for="pictureFile">{{filePicName}}</label>
+                            </div>
+                            <div class="input-group-append">
+                                <button *ngIf="uploadForm.get('pictureFile').value" type="submit" class="input-group-text">Subir</button>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="user id" aria-label="Username" (change)="onNameChange($event)" aria-describedby="basic-addon1">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

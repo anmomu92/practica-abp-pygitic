@@ -1,0 +1,75 @@
+<div class="container animated fadeIn slower">
+    <div class="row">
+        <div class="col-12 mt-5">
+            <!-- <div class="col-12 h2 text-center my-5">Subir imagen</div> -->
+            <nav aria-label="breadcrumb" class="my-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">Control</li>
+                    <li class="breadcrumb-item btn-link" [routerLink]="['newImage']">Subir imagen</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-12 mb-5">
+            <div class="d-flex justify-content-end align-items-center">
+                <div class="flex-column">
+                    <button class="btn btn-outline-dark" [routerLink]="['newImage']"><i class="fa fa-plus"></i> Nuevo usuario</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="row">
+                <div class="col-12 my-2">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div *ngIf="!picLoaded" class="picplace flex-column text-center">
+                            <div class="content"></div>
+                        </div>
+                        <div *ngIf="picLoaded" class="flex-column">
+                            <img [src]="uploadForm.get('pictureFile').value">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 my-2">
+                    <form [formGroup]="uploadForm" (ngSubmit)="onSubmitPicture()">
+                        <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="pictureFile" name="pictureFile" (change)="onPictureSelect($event)">
+                                <label class="custom-file-label" for="pictureFile">{{filePicName}}</label>
+                            </div>
+                            <div class="input-group-append">
+                                <button *ngIf="uploadForm.get('pictureFile').value" type="submit" class="input-group-text">Subir</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-12 mb-2">
+                <h5 *ngIf="accessAllowed === 0" class="alert alert-danger">Acceso denegado</h5>
+                <h5 *ngIf="accessAllowed === 1" class="alert alert-success">Acceso concedido</h5>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <app-mapviewer></app-mapviewer>
+        </div>
+        <div *ngIf="accessAllowed === 1" class="col-12 my-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Campo</th>
+                        <th>Dato</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row">ID</td>
+                        <td>{{this.currentAccess.usuario}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row">% reconocimiento</td>
+                        <td>{{this.currentAccess.confidence}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
