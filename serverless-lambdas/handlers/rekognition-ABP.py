@@ -17,7 +17,7 @@ rekognition = boto3.client('rekognition', region_name='us-east-1')
 dynamodb = boto3.client('dynamodb', region_name='us-east-1')
 
 
-def update_index(tableName,faceId, fullName, conf):
+def update_index(tableName,faceId, fullName, conf, image):
     response = dynamodb.put_item(
         TableName=tableName,
         Item={
@@ -25,7 +25,8 @@ def update_index(tableName,faceId, fullName, conf):
             'RekognitionId': {'S': faceId},
             'FullName': {'S': fullName},
             'DateTime': {'S': str(datetime.now())},
-            'Confidence': {'S': str(conf)}
+            'Confidence': {'S': str(conf)},
+            'ImageB64' : {'S' : image}
             }
         )
 
@@ -60,10 +61,12 @@ def handle(event, context):
             if match['Face']['Confidence'] > acierto: 
                 usuario = face['Item']['FullName']['S']
                 acierto = match['Face']['Confidence']
-                update_index('log-registry',match['Face']['FaceId'],face['Item']['FullName']['S'], match['Face']['Confidence'])
+                update_index('log-registry',match['Face']['FaceId'],face['Item']['FullName']['S'],
+                     match['Face']['Confidence'], image)
                 print (face['Item']['FullName']['S'])
             
         else:
+            update_index('log-registry',"Unknown","Unknown", 0, image)
             print ('no match found in person lookup')
     obj = {
         'usuario': usuario,

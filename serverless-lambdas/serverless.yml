@@ -1,4 +1,4 @@
-service: prueba-abp2
+service: prueba-abp3
 
 package:
   exclude:
@@ -9,6 +9,9 @@ package:
 custom:
   stage: ${opt:stage, "dev"}
   region: ${opt:region, "us-east-1"}
+  s3_bucket: image-store-rekog-abp
+  dynamo_rekog: rekog-index
+  dynamo_log: log-registry
 
 
 provider:
@@ -22,6 +25,12 @@ provider:
 
 
 functions:
+  picture-indexation:
+    runtime: python2.7
+    handler: handlers/picture-indexation.lambda_handler
+    events:
+      - s3: ${self:custom.s3_bucket}
+
   rekognition-ABP:
     handler: handlers/rekognition-ABP.handle
     events:
@@ -37,3 +46,35 @@ functions:
             path: /picture
             method: post
             cors: true
+
+resources:
+  Resources:
+    RekogIndexation:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Delete
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: RekognitionId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: RekognitionId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.dynamo_rekog}
+
+    LogRegist:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Delete
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: logId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: logId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.dynamo_log}
