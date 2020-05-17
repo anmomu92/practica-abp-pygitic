@@ -70,6 +70,24 @@
                 </tbody>
             </table>
         </div>
+        <div *ngIf="accessAllowed === 1" class="col-12 my-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let access of this.currentAccess.userLogs; let i = index">
+                        <td scope="row">{{i+1}}</td>
+                        <td scope="row">{{access.FullName}}</td>
+                        <td>{{access.DateTime | date : 'short' : 'undefined' : 'es-ES'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>

@@ -15,7 +15,8 @@ export class ControlComponent implements OnInit {
   accessAllowed = -1;
   currentAccess = {
     usuario: '',
-    confidence: 0
+    confidence: 0,
+    userLogs: []
   };
 
   constructor(private formBuilder: FormBuilder,
@@ -35,6 +36,7 @@ export class ControlComponent implements OnInit {
     const data = {image: this.uploadForm.get('pictureFile').value}
     this.comm.postAWS('rekog', data).subscribe((res: any) => {
       this.currentAccess = res;
+      console.log(res);
       this.comm.checkAccessAllowed(res.confidence);
     });
   }

@@ -11,6 +11,12 @@ import { AboutComponent } from './components/about/about.component';
 import { MapviewerComponent } from './components/mapviewer/mapviewer.component';
 import { UploadUserImageComponent } from './components/control/upload-user-image/upload-user-image.component';
 
+// locales Spanish
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+import { AccessLogComponent } from './components/control/access-log/access-log.component';
+registerLocaleData(localeEs, 'es-ES');
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +24,8 @@ import { UploadUserImageComponent } from './components/control/upload-user-image
     ControlComponent,
     AboutComponent,
     MapviewerComponent,
-    UploadUserImageComponent
+    UploadUserImageComponent,
+    AccessLogComponent
   ],
   imports: [
     BrowserModule,

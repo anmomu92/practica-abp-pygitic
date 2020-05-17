@@ -1,0 +1,24 @@
+<div class="container animated fadeIn slower">
+    <div class="row">
+        <div class="col-12 mt-5">
+            <div class="h2 my-4">Historial de acceso</div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let access of this.accessLogs; let i = index">
+                        <td scope="row">{{i+1}}</td>
+                        <td scope="row">{{access.FullName}}</td>
+                        <td>{{access.DateTime | date : 'short' : 'undefined' : 'es-ES'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

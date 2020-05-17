@@ -21,13 +21,13 @@ export class CommunicationService {
     return this.accessAllowed.asObservable();
   }
 
-  postAWS(endpoint, data) {
+  postAWS(endpoint, data = {}) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=utf-8'
       })
     };
-    return this.http.post(`https://b6g1auili2.execute-api.us-east-1.amazonaws.com/dev/${endpoint}`, data, httpOptions);
+    return this.http.post(` https://k5n7jkrggk.execute-api.us-east-1.amazonaws.com/dev/${endpoint}`, data, httpOptions);
   }
 
 }
