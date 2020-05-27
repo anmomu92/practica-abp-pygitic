@@ -22,7 +22,7 @@ export class ManagementComponent implements OnInit {
 
   requestLogs() {
     this.comm.postAWS('logs').subscribe((res: any) => {
-      this.userLogs = res;
+      this.userLogs = res.userLogs;
       console.log(res);
     });
   }

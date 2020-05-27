@@ -16,6 +16,7 @@ import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { AccessLogComponent } from './components/control/access-log/access-log.component';
 import { ManagementComponent } from './components/management/management.component';
+import { DeleteUserComponent } from './components/management/delete-user/delete-user.component';
 registerLocaleData(localeEs, 'es-ES');
 
 @NgModule({
@@ -27,7 +28,8 @@ registerLocaleData(localeEs, 'es-ES');
     MapviewerComponent,
     UploadUserImageComponent,
     AccessLogComponent,
-    ManagementComponent
+    ManagementComponent,
+    DeleteUserComponent
   ],
   imports: [
     BrowserModule,

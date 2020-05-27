@@ -1,0 +1,22 @@
+<div class="container animated fadeIn slower">
+    <div class="row">
+        <div class="col-12 my-5">
+            <!-- <div class="col-12 h2 text-center my-5">Subir imagen</div> -->
+            <nav aria-label="breadcrumb" class="my-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item btn-link" style="cursor: pointer" [routerLink]="['/admin']">Administración</li>
+                    <li class="breadcrumb-item active" aria-current="page">Eliminar usuario</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-12">
+            <div class="input-group mb-3">
+                <input #userId type="text" class="form-control" placeholder="ID del usuario" aria-label="userid" (change)="changeId(userId.value)">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" (click)="deleteUser()">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

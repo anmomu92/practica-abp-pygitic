@@ -4,11 +4,13 @@ import { ControlComponent } from './components/control/control.component';
 import { AboutComponent } from './components/about/about.component';
 import { UploadUserImageComponent } from './components/control/upload-user-image/upload-user-image.component';
 import { ManagementComponent } from './components/management/management.component';
+import { DeleteUserComponent } from './components/management/delete-user/delete-user.component';
 
 const routes: Routes = [
   { path: 'control', component: ControlComponent },
   { path: 'admin', component: ManagementComponent },
   { path: 'admin/newImage', component: UploadUserImageComponent },
+  { path: 'admin/deleteUser', component: DeleteUserComponent },
   { path: 'about', component: AboutComponent },
   { path: '**', redirectTo: '/control' }
 ];
