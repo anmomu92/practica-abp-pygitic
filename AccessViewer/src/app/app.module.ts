@@ -15,6 +15,7 @@ import { UploadUserImageComponent } from './components/control/upload-user-image
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { AccessLogComponent } from './components/control/access-log/access-log.component';
+import { ManagementComponent } from './components/management/management.component';
 registerLocaleData(localeEs, 'es-ES');
 
 @NgModule({
@@ -25,7 +26,8 @@ registerLocaleData(localeEs, 'es-ES');
     AboutComponent,
     MapviewerComponent,
     UploadUserImageComponent,
-    AccessLogComponent
+    AccessLogComponent,
+    ManagementComponent
   ],
   imports: [
     BrowserModule,

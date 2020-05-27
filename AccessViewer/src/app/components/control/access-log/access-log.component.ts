@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { CommunicationService } from '../../../services/communication.service';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-access-log',
@@ -8,14 +7,9 @@ import { CommunicationService } from '../../../services/communication.service';
 })
 export class AccessLogComponent implements OnInit {
 
-  accessLogs = [];
+  @Input() accessLogs;
 
-  constructor( private comm: CommunicationService ) {
-    this.comm.postAWS('accessLogs').subscribe((res: any) => {
-      this.accessLogs = res;
-      console.log(res);
-    });
-  }
+  constructor() {}
 
   ngOnInit() {
   }
