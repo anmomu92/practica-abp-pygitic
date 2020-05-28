@@ -1,4 +1,4 @@
-service: prueba-abp3
+service: ABP-
 
 package:
   exclude:
@@ -7,7 +7,7 @@ package:
     - handlers/**
 
 custom:
-  stage: ${opt:stage, "dev"}
+  stage: ${opt:stage, ""}
   region: ${opt:region, "us-east-1"}
   s3_bucket: image-store-rekog-abp
   dynamo_rekog: rekog-index
@@ -46,6 +46,20 @@ functions:
             path: /picture
             method: post
             cors: true
+  get_logs:
+    handler: handlers/getLogs.handle
+    events:
+      - http:
+            path: /logs
+            method: post
+            cors: true
+  rmv_user:
+    handler: handlers/rmv_user.handle
+    events:
+      - http:
+            path: /rmv
+            method: post
+            cors: true
 
 resources:
   Resources:
@@ -71,10 +85,49 @@ resources:
         AttributeDefinitions:
           - AttributeName: logId
             AttributeType: S
+          - AttributeName: RekognitionId
+            AttributeType: S
+          - AttributeName: timestamp
+            AttributeType: N
+          - AttributeName: dumpy
+            AttributeType: S
         KeySchema:
           - AttributeName: logId
             KeyType: HASH
+          - AttributeName: timestamp
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+        GlobalSecondaryIndexes:
+          - IndexName: RekognitionId
+            KeySchema: 
+              - AttributeName: RekognitionId
+                KeyType: HASH
+              - AttributeName: timestamp
+                KeyType: RANGE
+            Projection:
+              NonKeyAttributes: 
+                - DateTime
+                - FullName
+                - Confidence
+              ProjectionType: INCLUDE
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+          - IndexName: dumpy
+            KeySchema: 
+              - AttributeName: dumpy
+                KeyType: HASH
+              - AttributeName: timestamp
+                KeyType: RANGE
+            Projection:
+              NonKeyAttributes:
+                - DateTime
+                - FullName
+                - Confidence
+              ProjectionType: INCLUDE
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
         TableName: ${self:custom.dynamo_log}

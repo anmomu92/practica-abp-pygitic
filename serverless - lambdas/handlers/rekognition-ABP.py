@@ -4,9 +4,11 @@ import os
 import base64
 import io
 import uuid
+import time
 from datetime import datetime
 from uuid import UUID
 from decimal import Decimal
+from boto3.dynamodb.conditions import Key, Attr
 
 
 
@@ -15,6 +17,8 @@ DEFAULT_HEADERS = {
 }
 rekognition = boto3.client('rekognition', region_name='us-east-1')
 dynamodb = boto3.client('dynamodb', region_name='us-east-1')
+dynamodb1 = boto3.resource('dynamodb', region_name='us-east-1')
+table = dynamodb1.Table('log-registry')
 
 
 def update_index(tableName,faceId, fullName, conf, image):
@@ -22,18 +26,26 @@ def update_index(tableName,faceId, fullName, conf, image):
         TableName=tableName,
         Item={
             'logId': {'S': str(uuid.uuid4())},
+			'timestamp': {'N': str(time.mktime(datetime.now().timetuple()))},
             'RekognitionId': {'S': faceId},
             'FullName': {'S': fullName},
             'DateTime': {'S': str(datetime.now())},
             'Confidence': {'S': str(conf)},
-            'ImageB64' : {'S' : image}
+            'ImageB64' : {'S' : image},
+			'dumpy' : {'S' : 'dumy'}
             }
         )
+
+def get_last_logs(faceId, limite = 10):
+    response = table.query(IndexName='RekognitionId', Limit=limite, ScanIndexForward= False,KeyConditionExpression=Key('RekognitionId').eq(faceId))
+    return response
+
 
 def handle(event, context):
     body = json.loads(event.get('body') or '{}')
     image = body.get('image', None)
     usuario = ""
+    IdUser = ""
     acierto = 0.00
     
     if (image == None):
@@ -61,17 +73,22 @@ def handle(event, context):
             if match['Face']['Confidence'] > acierto: 
                 usuario = face['Item']['FullName']['S']
                 acierto = match['Face']['Confidence']
+                IdUser = match['Face']['FaceId']
                 update_index('log-registry',match['Face']['FaceId'],face['Item']['FullName']['S'],
                      match['Face']['Confidence'], image)
                 print (face['Item']['FullName']['S'])
-            
-        else:
-            update_index('log-registry',"Unknown","Unknown", 0, image)
-            print ('no match found in person lookup')
+    if(len(response['FaceMatches']) == 0):
+        update_index('log-registry',"Unknown","Unknown", 0, image)
+        print ('no match found in person lookup')
+
     obj = {
         'usuario': usuario,
         'confidence': acierto
-        }
+    }
+    if(IdUser != ""):
+        respon_logs = get_last_logs(IdUser)
+        obj['userLogs'] = respon_logs['Items']
+    
     return jsonify(obj)
 
 
