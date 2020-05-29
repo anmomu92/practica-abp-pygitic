@@ -12,6 +12,7 @@ export class UploadUserImageComponent implements OnInit {
   uploadForm: FormGroup;
   picLoaded = false;
   filePicName = 'Elige archivo';
+  uploaded = false;
 
   newImageBody = {
     image: '',
@@ -28,12 +29,14 @@ export class UploadUserImageComponent implements OnInit {
   }
 
   onSubmitPicture() {
+    this.uploaded = false;
     this.comm.postAWS('picture', this.newImageBody).subscribe((res) => {
-      console.log(res);
+      this.uploaded = true;
     });
   }
 
   onPictureSelect(event) {
+    this.uploaded = false;
     if (event.target.files.length > 0) {
         const fileReader = new FileReader();
         this.filePicName = event.target.files[0].name;
@@ -51,6 +54,7 @@ export class UploadUserImageComponent implements OnInit {
   }
 
   onNameChange(event) {
+    this.uploaded = false;
     this.newImageBody.userId = event.target.value;
   }
 }

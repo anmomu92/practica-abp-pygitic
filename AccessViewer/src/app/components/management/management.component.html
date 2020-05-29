@@ -11,7 +11,7 @@
 
         <div class="col-12 mb-5">
             <div class="d-flex justify-content-between align-items-center">
-                <div class="flex-column">
+                <div class="flex-column mx-1">
                     <label for="limitLogs">Límite</label>
                     <select #limit id="limitLogs" (change)="changeParam('limite', limit.value)" class="custom-select custom-select">
                         <option selected value="10">10</option>
@@ -19,16 +19,19 @@
                         <option value="50">50</option>
                     </select>
                 </div>
-                <div class="flex-column">
+                <div class="flex-column mx-1">
                     <button class="btn btn-outline-dark" [routerLink]="['newImage']"><i class="fa fa-plus"></i> Nuevo usuario</button>
                 </div>
-                <div class="flex-column">
+                <div class="flex-column mx-1">
                     <button class="btn btn-outline-danger" [routerLink]="['deleteUser']"><i class="fa fa-minus"></i> Eliminar usuario</button>
                 </div>
             </div>
         </div>
 
         <div class="col-12 my-2">
+            <div class="h4 mb-4">
+                Historial de últimos acceso
+            </div>
             <app-access-log [accessLogs]="this.userLogs"></app-access-log>
         </div>
     </div>

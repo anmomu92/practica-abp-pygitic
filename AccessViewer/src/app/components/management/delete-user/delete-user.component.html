@@ -17,6 +17,14 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 mb-2">
+            <div *ngIf="deletedUser != ''">
+                <h5 class="alert alert-success">Usuario {{deletedUser}} eliminado.</h5>
+            </div>
+            <div *ngIf="deleteAction && deletedUser == ''">
+                <h5 class="alert alert-danger">Error, usuario no encontrado.</h5>
+            </div>
+        </div>
     </div>
 
 </div>

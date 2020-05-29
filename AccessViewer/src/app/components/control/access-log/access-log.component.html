@@ -10,7 +10,7 @@
         <tr *ngFor="let access of this.accessLogs; let i = index">
             <td scope="row">{{i+1}}</td>
             <td scope="row">{{access.FullName}}</td>
-            <td>{{access.DateTime | date : 'short' : 'undefined' : 'es-ES'}}</td>
+            <td>{{access.DateTime | date : 'short' : '+0400' : 'es-ES'}}</td>
         </tr>
     </tbody>
 </table>

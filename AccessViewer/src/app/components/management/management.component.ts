@@ -21,15 +21,13 @@ export class ManagementComponent implements OnInit {
   }
 
   requestLogs() {
-    this.comm.postAWS('logs').subscribe((res: any) => {
+    this.comm.postAWS('logs', this.params).subscribe((res: any) => {
       this.userLogs = res.userLogs;
-      console.log(res);
     });
   }
 
   changeParam( key, value ) {
-    console.log(value);
-    this.params[key] = value;
+    this.params[key] = Number(value);
     this.requestLogs();
   }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommunicationService } from '../../../services/communication.service';
 
 @Component({
   selector: 'app-delete-user',
@@ -8,8 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class DeleteUserComponent implements OnInit {
 
   userId = '';
+  deleteAction = false;
+  deletedUser = '';
 
-  constructor() { }
+  constructor( private comm: CommunicationService ) { }
 
   ngOnInit() {
   }
@@ -19,8 +22,12 @@ export class DeleteUserComponent implements OnInit {
   }
 
   deleteUser() {
+    this.deletedUser = '';
     if (this.userId !== '') {
-      
+      this.comm.postAWS('rmv', {name: this.userId}).subscribe((res: any) => {
+        this.deleteAction = true;
+        this.deletedUser = res ? res.name : '';
+      });
     }
   }
 
