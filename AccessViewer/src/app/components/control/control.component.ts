@@ -19,6 +19,10 @@ export class ControlComponent implements OnInit {
     userLogs: []
   };
 
+  // For testing purposes
+  requestsNum = 0;
+  totalMs = 0;
+
   constructor(private formBuilder: FormBuilder,
               private comm: CommunicationService) { }
 
@@ -33,10 +37,17 @@ export class ControlComponent implements OnInit {
   }
 
   onSubmitPicture() {
-    const data = {image: this.uploadForm.get('pictureFile').value}
+    const data = {image: this.uploadForm.get('pictureFile').value};
+    let t_i = new Date();
     this.comm.postAWS('rekog', data).subscribe((res: any) => {
+      this.requestsNum += 1;
+      let t_j = new Date();
+      this.totalMs += t_j.getTime() - t_i.getTime();
+
+      console.log(`Tiempo medio: ${this.totalMs / this.requestsNum} ms en ${this.requestsNum} peticiones`);
+
       this.currentAccess = res;
-      console.log(res);
+      // console.log(res);
       this.comm.checkAccessAllowed(res.confidence);
     });
   }

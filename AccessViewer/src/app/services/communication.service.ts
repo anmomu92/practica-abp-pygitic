@@ -27,7 +27,7 @@ export class CommunicationService {
         'Content-Type': 'application/json; charset=utf-8'
       })
     };
-    return this.http.post(` https://k5n7jkrggk.execute-api.us-east-1.amazonaws.com/dev/${endpoint}`, data, httpOptions);
+    return this.http.post(`https://6um12052n6.execute-api.us-east-1.amazonaws.com/dev/${endpoint}`, data, httpOptions);
   }
 
 }
