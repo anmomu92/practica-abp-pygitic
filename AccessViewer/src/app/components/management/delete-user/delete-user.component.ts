@@ -18,17 +18,16 @@ export class DeleteUserComponent implements OnInit {
   }
 
   changeId(value) {
+    this.deleteAction = false;
     this.userId = value;
   }
 
   deleteUser() {
     this.deletedUser = '';
-    if (this.userId !== '') {
-      this.comm.postAWS('rmv', {name: this.userId}).subscribe((res: any) => {
-        this.deleteAction = true;
-        this.deletedUser = res ? res.name : '';
-      });
-    }
+    this.comm.postAWS('rmv', {name: this.userId}).subscribe((res: any) => {
+      this.deleteAction = true;
+      this.deletedUser = res ? res.name : '';
+    });
   }
 
 }
